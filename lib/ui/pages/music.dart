@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_music_app/data/model/music.dart';
 import 'package:flutter_music_app/model/bottom_menu.dart';
 import 'package:flutter_music_app/model/const.dart';
+import 'package:flutter_music_app/model/list_music.dart';
 import 'package:flutter_music_app/model/music_item.dart';
 import 'package:flutter_music_app/model/search_bar.dart';
 import 'package:flutter_music_app/ui/detail/music_detail.dart';
@@ -61,24 +62,7 @@ class _MusicPage extends State<MusicPage>{
 
           Expanded(
             flex: 3,
-            child: ListView.builder(
-              itemCount: _list.length,
-              scrollDirection: Axis.vertical,
-              shrinkWrap: true,
-              physics: const ScrollPhysics(),
-              itemBuilder: (context, index){
-                return GestureDetector(
-                  onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => MusicDetail(music: _list[index])));
-                  },
-
-                  child: Container(
-                    margin: const EdgeInsets.only(bottom: 30),
-                    child: MusicItem(music: _list[index]),
-                  ),
-                );
-              }
-            ),
+            child: MusicList(list: _list)
           ),
         ],
       ),

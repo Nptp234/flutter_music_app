@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_music_app/data/model/music.dart';
 import 'package:flutter_music_app/data/model/playlist.dart';
 import 'package:flutter_music_app/model/const.dart';
 import 'package:flutter_music_app/model/playlist_item.dart';
 import 'package:flutter_music_app/model/search_bar.dart';
+import 'package:flutter_music_app/ui/detail/playlist_detail.dart';
 
 class PlaylistPage extends StatefulWidget{
   const PlaylistPage({super.key});
@@ -20,6 +22,14 @@ class _PlaylistPage extends State<PlaylistPage>{
     Playlist(name: "For you", img: 'assets/logoIcon/arvarta.png'),
     Playlist(name: "My playlist", img: 'assets/logoIcon/arvarta.png'),
     Playlist(name: "Melodic rap", img: 'assets/logoIcon/arvarta.png'),
+  ];
+
+  final List<Music> _musics = [
+    Music(name: 'Simple Love', uper: 'Obito', imgUrl: 'assets/logoIcon/arvarta.png'),
+    Music(name: 'Simple Love', uper: 'Obito', imgUrl: 'assets/logoIcon/arvarta.png'),
+    Music(name: 'Simple Love', uper: 'Obito', imgUrl: 'assets/logoIcon/arvarta.png'),
+    Music(name: 'Simple Love', uper: 'Obito', imgUrl: 'assets/logoIcon/arvarta.png'),
+    Music(name: 'Simple Love', uper: 'Obito', imgUrl: 'assets/logoIcon/arvarta.png'),
   ];
 
   @override
@@ -86,9 +96,15 @@ class _PlaylistPage extends State<PlaylistPage>{
                 childAspectRatio: 0.8
               ),
               itemBuilder: (context, index){
-                return Container(
-                  margin: const EdgeInsets.only(bottom: 30, left: 10, right: 10),
-                  child: PlaylistItem(playlist: lst[index]),
+                lst[index].setMusics(_musics);
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => PlaylistDetail(playlist: lst[index],)));
+                  },
+                  child: Container(
+                    margin: const EdgeInsets.only(bottom: 30, left: 10, right: 10),
+                    child: PlaylistItem(playlist: lst[index]),
+                  ),
                 );
               }, 
             ),
