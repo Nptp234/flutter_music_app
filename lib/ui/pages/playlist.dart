@@ -20,20 +20,6 @@ class _PlaylistPage extends State<PlaylistPage>{
     Playlist(name: "For you", img: 'assets/logoIcon/arvarta.png'),
     Playlist(name: "My playlist", img: 'assets/logoIcon/arvarta.png'),
     Playlist(name: "Melodic rap", img: 'assets/logoIcon/arvarta.png'),
-    Playlist(name: "Liked music", img: 'assets/logoIcon/arvarta.png'),
-    Playlist(name: "Most like", img: 'assets/logoIcon/arvarta.png'),
-    Playlist(name: "For you", img: 'assets/logoIcon/arvarta.png'),
-    Playlist(name: "My playlist", img: 'assets/logoIcon/arvarta.png'),
-    Playlist(name: "Melodic rap", img: 'assets/logoIcon/arvarta.png'),
-    Playlist(name: "Liked music", img: 'assets/logoIcon/arvarta.png'),
-    Playlist(name: "Most like", img: 'assets/logoIcon/arvarta.png'),
-    Playlist(name: "For you", img: 'assets/logoIcon/arvarta.png'),
-    Playlist(name: "My playlist", img: 'assets/logoIcon/arvarta.png'),
-    Playlist(name: "Melodic rap", img: 'assets/logoIcon/arvarta.png'),
-    Playlist(name: "Liked music", img: 'assets/logoIcon/arvarta.png'),
-    Playlist(name: "Most like", img: 'assets/logoIcon/arvarta.png'),
-    Playlist(name: "For you", img: 'assets/logoIcon/arvarta.png'),
-    Playlist(name: "My playlist", img: 'assets/logoIcon/arvarta.png'),
   ];
 
   @override
@@ -59,12 +45,39 @@ class _PlaylistPage extends State<PlaylistPage>{
         children: [
           const MySearchBar(),
 
-          Expanded(
-            // flex: 2,
-            child: GridView.builder(
-              itemCount: _list.isEmpty?1:_list.length,
+          //flexible for overflowed't
+          Flexible(
+            child: ListView(
+              children: [
+                _lstPlaylist(context, 'For you', _list),
+                _lstPlaylist(context, 'Popular playlist', _list),
+                _lstPlaylist(context, 'Lofi', _list),
+                _lstPlaylist(context, 'Vietnamese beat', _list),
+              ],
+            )
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget _lstPlaylist(BuildContext context, String title, List<Playlist> lst){
+    return Container(
+      width: double.infinity,
+      margin: const EdgeInsets.only(bottom: 20),
+      padding: const EdgeInsets.all(10),
+
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+
+        children: [
+          Text(title, style: const TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),),
+          const SizedBox(height: 20,),
+          GridView.builder(
+              itemCount: lst.isEmpty?1:lst.length,
               scrollDirection: Axis.vertical,
-              // shrinkWrap: true,
+              shrinkWrap: true,
               physics: const ScrollPhysics(),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
@@ -75,12 +88,11 @@ class _PlaylistPage extends State<PlaylistPage>{
               itemBuilder: (context, index){
                 return Container(
                   margin: const EdgeInsets.only(bottom: 30, left: 10, right: 10),
-                  child: PlaylistItem(playlist: _list[index]),
+                  child: PlaylistItem(playlist: lst[index]),
                 );
               }, 
             ),
-          ),
-        ],
+        ]
       ),
     );
   }
