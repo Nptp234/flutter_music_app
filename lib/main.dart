@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_music_app/ui/pages/home.dart';
+import 'package:flutter_music_app/model/bottom_menu.dart';
+import 'package:flutter_music_app/model/temp.dart';
+import 'package:flutter_music_app/ui/pages/music.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,10 +15,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        colorScheme: const ColorScheme.light(),
+        colorScheme: const ColorScheme.dark(),
         useMaterial3: true,
       ),
-      home: const HomePage()
+      home: const BottomMenu()
     );
   }
 }
