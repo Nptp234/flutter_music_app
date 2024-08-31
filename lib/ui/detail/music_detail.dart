@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_music_app/data/model/music.dart';
 import 'package:flutter_music_app/model/const.dart';
 import 'package:flutter_music_app/model/duration_bar.dart';
+import 'package:flutter_music_app/model/menu_bottom_sheet.dart';
 import 'package:just_audio/just_audio.dart';
 
 class MusicDetail extends StatefulWidget{
@@ -70,7 +71,7 @@ class _MusicDetail extends State<MusicDetail>{
             ),
 
             IconButton(
-              onPressed: (){}, 
+              onPressed: (){customBottomSheet(context, widget.music);}, 
               icon: const Icon(Icons.more_vert, color: Colors.white, size: 20,)
             ),
           ],
