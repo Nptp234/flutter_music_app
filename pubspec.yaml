@@ -37,6 +37,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   motion_tab_bar: ^2.0.4
   just_audio: ^0.9.40
+  quickalert: ^1.1.0
 
 dev_dependencies:
   flutter_test:

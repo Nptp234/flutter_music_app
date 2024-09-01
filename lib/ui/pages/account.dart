@@ -1,6 +1,12 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_music_app/data/model/user.dart';
+import 'package:flutter_music_app/model/const.dart';
+import 'package:flutter_music_app/model/list_menu_account.dart';
+import 'package:flutter_music_app/ui/user_page/user_center.dart';
+import 'package:quickalert/models/quickalert_type.dart';
+import 'package:quickalert/widgets/quickalert_dialog.dart';
 
 class AccountPage extends StatefulWidget {
   const AccountPage({super.key});
@@ -11,93 +17,65 @@ class AccountPage extends StatefulWidget {
 
 class _AccountPage extends State<AccountPage> {
 
+  final user = User();
+
   @override
   Widget build(BuildContext context) {
     return Theme(
       data: ThemeData.dark(),
       child: Scaffold(
         body: Center(
-          child: Container(
-            padding: const EdgeInsets.only(top: 30),
-            constraints: const BoxConstraints(maxWidth: 400),
-            color: Colors.transparent,
-            child: ListView(
-              children: const [
-                const _SingleSection(
-                  title: "General",
+          child: user.username!=null?
+            AccountMenu():
+            Container(
+              width: getMainWidth(context)/1.2,
+              height: getMainHeight(context)/2.3,
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: Colors.grey.withOpacity(0.5),
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(width: 2, color: Colors.black38.withOpacity(0.5))
+              ),
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    _CustomListTile(
-                        title: "My favorite",
-                        icon: CupertinoIcons.heart_circle_fill),
-                    _CustomListTile(
-                        title: "My downloaded",
-                        icon: CupertinoIcons.arrow_down_circle_fill),
-                    _CustomListTile(
-                        title: "My playlist",
-                        icon: CupertinoIcons.play_circle_fill),
+                    const Column(
+                      children: [
+                        //title
+                        Text('Oops!', style: TextStyle(color: Colors.white, fontSize: 25, fontWeight: FontWeight.bold), textAlign: TextAlign.center,),
+                        SizedBox(height: 20,),
+                        //text
+                        Text('We can help you login or create your account', style: TextStyle(color: Colors.white, fontSize: 17, fontWeight: FontWeight.normal), textAlign: TextAlign.center,),
+                        
+                      ],
+                    ),
+                    //button
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>UserCenter()));
+                      },
+                      child: Container(
+                        width: 150,
+                        height: 50,
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20)
+                        ),
+                        child: const Text('Ok', style: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold), textAlign: TextAlign.center,),
+                      ),
+                    )
                   ],
                 ),
-                const _SingleSection(
-                  title: "Organization",
-                  children: [
-                    _CustomListTile(
-                        title: "Profile", icon: Icons.person_outline_rounded),
-                    _CustomListTile(
-                        title: "Help & Feedback",
-                        icon: Icons.help_outline_rounded),
-                    _CustomListTile(
-                        title: "About", icon: Icons.info_outline_rounded),
-                  ],
-                ),
-              ],
-            ),
-          ),
+              ),
+            )
         ),
       ),
     );
   }
+
 }
 
-class _CustomListTile extends StatelessWidget {
-  final String title;
-  final IconData icon;
-  final Function()? action;
-  // ignore: unused_element
-  const _CustomListTile({required this.title, required this.icon, this.action});
 
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      title: Text(title),
-      leading: Icon(icon),
-      onTap: action,
-    );
-  }
-}
-
-class _SingleSection extends StatelessWidget {
-  final String? title;
-  final List<Widget> children;
-  const _SingleSection({this.title, required this.children});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        if (title != null)
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              title!,
-              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-            ),
-          ),
-        Column(
-          children: children,
-        ),
-      ],
-    );
-  }
-}
