@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_music_app/data/model/user.dart';
+import 'package:flutter_music_app/model/bottom_menu.dart';
 import 'package:flutter_music_app/model/const.dart';
+import 'package:flutter_music_app/ui/pages/music.dart';
 
 class SignUp extends StatelessWidget{
 
@@ -9,6 +12,9 @@ class SignUp extends StatelessWidget{
   TextEditingController passwordControl = TextEditingController();
 
   SignUp({super.key});
+
+  final users = ListUserModel();
+  final user = User();
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +46,9 @@ class SignUp extends StatelessWidget{
           //button
           GestureDetector(
             onTap: () {
-              
+              user.setUser(emailControl.text, usernameControl.text, passwordControl.text);
+              users.add(user);
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const BottomMenu()));
             },
             child: Container(
               width: getMainWidth(context),

@@ -1,7 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_music_app/data/local_store/favorite_sqlite.dart';
 import 'package:flutter_music_app/data/model/music.dart';
 import 'package:flutter_music_app/model/const.dart';
+import 'package:quickalert/models/quickalert_type.dart';
+import 'package:quickalert/widgets/quickalert_dialog.dart';
+
+FavoriteSqlite _favoriteSqlite = FavoriteSqlite();
+
+bool isLike = false;
 
 customBottomSheet(BuildContext context, Music music){
   return showModalBottomSheet(
@@ -22,7 +29,21 @@ customBottomSheet(BuildContext context, Music music){
 
                                 children: [
                                   _customMusicTitle(context, music),
-                                  _customListTitle(context, CupertinoIcons.heart, 'Like', (){}),
+                                  _customListTitle(context, !isLike?CupertinoIcons.heart:CupertinoIcons.heart_fill, 'Like', () async{
+                                    bool l = await _favoriteSqlite.insert(music.id!);
+                                    if(!l){
+                                      QuickAlert.show(
+                                        context: context, 
+                                        type: QuickAlertType.error,
+                                        text: 'We have some error, please try again later!'
+                                      );
+                                    }else{
+                                      QuickAlert.show(
+                                        context: context, 
+                                        type: QuickAlertType.success,
+                                      );
+                                    }
+                                  }),
                                   _customListTitle(context, CupertinoIcons.music_note_list, 'Add to playlist', (){}),
                                   _customListTitle(context, CupertinoIcons.text_badge_minus, 'Hide this music', (){}),
                                 ],

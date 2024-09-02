@@ -1,11 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_music_app/data/model/user.dart';
 import 'package:flutter_music_app/model/const.dart';
 
+// ignore: must_be_immutable
 class SignIn extends StatelessWidget{
 
   TextEditingController emailControl = TextEditingController();
   TextEditingController passwordControl = TextEditingController();
+
+  final user = User();
 
   SignIn({super.key});
 
@@ -31,14 +35,14 @@ class SignIn extends StatelessWidget{
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _input(context, 'Your email or username', emailControl),
+          _input(context, 'Your email', emailControl),
           _input(context, 'Your password', passwordControl),
           const SizedBox(height: 50,),
 
           //button
           GestureDetector(
             onTap: () {
-              
+              // user.setUser(emailControl.text, )
             },
             child: Container(
               width: getMainWidth(context),
