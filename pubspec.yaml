@@ -39,6 +39,10 @@ dependencies:
   just_audio: ^0.9.40
   quickalert: ^1.1.0
   sqflite: ^2.3.3+1
+  file_picker: ^8.1.2
+  provider: ^6.1.2
+  path: ^1.9.0
+  intl: ^0.19.0
 
 dev_dependencies:
   flutter_test:

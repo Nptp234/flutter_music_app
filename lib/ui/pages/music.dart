@@ -38,20 +38,21 @@ class _MusicPage extends State<MusicPage>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        physics: const ScrollPhysics(),
-        child: _body(context),
-      ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          physics: const ScrollPhysics(),
+          child: _body(context),
+        ),
+      )
       // bottomNavigationBar: const BottomMenu(),
     );
   }
 
   Widget _body(BuildContext context){
     return Container(
-      height: getMainHeight(context)-100,
-      padding: const EdgeInsets.only(top: 50),
-      constraints: const BoxConstraints(maxWidth: 400),
+      height: getMainHeight(context),
+      padding: const EdgeInsets.all(10),
       color: Colors.transparent,
 
       child: Column(

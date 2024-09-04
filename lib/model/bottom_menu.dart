@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_music_app/model/music_item.dart';
 import 'package:flutter_music_app/ui/pages/account.dart';
+import 'package:flutter_music_app/ui/pages/home.dart';
 import 'package:flutter_music_app/ui/pages/music.dart';
 import 'package:flutter_music_app/ui/pages/playlist.dart';
+import 'package:flutter_music_app/ui/pages/upload_music.dart';
 import 'package:motion_tab_bar/MotionTabBar.dart';
 import 'package:motion_tab_bar/MotionTabBarController.dart';
 
@@ -39,8 +42,8 @@ class _BottomMenu extends State<BottomMenu> with TickerProviderStateMixin{
       body: IndexedStack(
         index: _motionTabBarController!.index,
         children: const [
-          MusicPage(),
-          PlaylistPage(),
+          HomePage(),
+          UploadPage(),
           AccountPage(),
         ],
       ),
@@ -48,7 +51,7 @@ class _BottomMenu extends State<BottomMenu> with TickerProviderStateMixin{
       bottomNavigationBar: MotionTabBar(
         controller: _motionTabBarController,
         tabIconSize: 28.0,
-        tabIconSelectedSize: 26.0,
+        tabIconSelectedSize: 30.0,
         tabIconColor: Colors.grey,
         tabSelectedColor: Colors.blue[900],
         tabIconSelectedColor: Colors.white,
@@ -57,9 +60,9 @@ class _BottomMenu extends State<BottomMenu> with TickerProviderStateMixin{
         tabBarColor: Colors.black,
         textStyle: const TextStyle(color: Colors.transparent),
 
-        initialSelectedTab: "Music", 
-        labels: const ["Music", "Playlist", "Account"],
-        icons: const [Icons.music_note, CupertinoIcons.list_dash, Icons.person],
+        initialSelectedTab: "Home", 
+        labels: const ["Home", "Add Your Music", "Account"],
+        icons: const [Icons.music_note, CupertinoIcons.plus_app_fill, Icons.person],
 
         onTabItemSelected: (int value) {
             setState(() {
