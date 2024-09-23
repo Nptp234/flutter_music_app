@@ -9,6 +9,8 @@ class UserCenter extends StatelessWidget{
 
   final user = User();
 
+  UserCenter({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

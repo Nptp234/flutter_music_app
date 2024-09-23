@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_music_app/data/model/music.dart';
 import 'package:flutter_music_app/model/music_item.dart';

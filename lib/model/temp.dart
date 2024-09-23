@@ -7,7 +7,7 @@ import 'package:motion_tab_bar/MotionTabBarController.dart';
 // void main() => runApp(const MyApp());
 
 class MyAppEx extends StatelessWidget {
-  const MyAppEx({Key? key}) : super(key: key);
+  const MyAppEx({super.key});
 
   // This widget is the root of your application.
   @override
@@ -23,7 +23,7 @@ class MyAppEx extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, this.title}) : super(key: key);
+  const MyHomePage({super.key, this.title});
 
   final String? title;
 
@@ -101,8 +101,8 @@ class MainPageContentComponent extends StatelessWidget {
   const MainPageContentComponent({
     required this.title,
     required this.controller,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final String title;
   final MotionTabBarController controller;

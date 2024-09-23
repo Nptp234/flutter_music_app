@@ -2,7 +2,6 @@ import 'dart:collection';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_music_app/data/model/music.dart';
 
 class UploadMusicProvider with ChangeNotifier{
   List<File> _lst = [];

@@ -1,13 +1,14 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_music_app/data/api/music_api.dart';
 import 'package:flutter_music_app/data/model/music.dart';
-import 'package:flutter_music_app/model/const.dart';
 import 'package:flutter_music_app/model/menu_bottom_sheet.dart';
 
 class MusicItem extends StatelessWidget{
 
   final Music music;
-  const MusicItem({super.key, required this.music});
+  MusicItem({super.key, required this.music});
+
+  MusicApi musicApi = MusicApi();
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +26,7 @@ class MusicItem extends StatelessWidget{
             child: SizedBox(
               width: 70,
               height: 70,
-              child: Image.asset(music.imgUrl!, fit: BoxFit.cover,),
+              child: Image.network(music.imgUrl!, fit: BoxFit.cover,),
             ),
           ),
           const SizedBox(width: 15,),
@@ -38,7 +39,7 @@ class MusicItem extends StatelessWidget{
               crossAxisAlignment: CrossAxisAlignment.start,
 
               children: [
-                Text(music.name!, style: const TextStyle(color: Colors.white, fontSize: 17, fontWeight: FontWeight.bold),),
+                Text(musicApi.formatName(music.name!), style: const TextStyle(color: Colors.white, fontSize: 17, fontWeight: FontWeight.bold),),
                 const SizedBox(height: 7,),
                 Text(music.uper!, style: const TextStyle(color: Colors.grey, fontSize: 15, fontWeight: FontWeight.bold),)
               ],

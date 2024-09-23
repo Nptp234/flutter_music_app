@@ -1,10 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_music_app/model/music_item.dart';
 import 'package:flutter_music_app/ui/pages/account.dart';
 import 'package:flutter_music_app/ui/pages/home.dart';
-import 'package:flutter_music_app/ui/pages/music.dart';
-import 'package:flutter_music_app/ui/pages/playlist.dart';
 import 'package:flutter_music_app/ui/pages/upload_music.dart';
 import 'package:motion_tab_bar/MotionTabBar.dart';
 import 'package:motion_tab_bar/MotionTabBarController.dart';

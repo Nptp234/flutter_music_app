@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_music_app/model/bottom_menu.dart';
 import 'package:flutter_music_app/state_manage/provider/upload_music.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+void main() async{
+  await dotenv.load(fileName: "assets/.env");
   runApp(const MyApp());
 }
 

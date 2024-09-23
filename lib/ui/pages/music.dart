@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_music_app/data/model/music.dart';
-import 'package:flutter_music_app/model/bottom_menu.dart';
 import 'package:flutter_music_app/model/const.dart';
 import 'package:flutter_music_app/model/list_music.dart';
-import 'package:flutter_music_app/model/music_item.dart';
 import 'package:flutter_music_app/model/search_bar.dart';
-import 'package:flutter_music_app/ui/detail/music_detail.dart';
 
 class MusicPage extends StatefulWidget{
   const MusicPage({super.key});

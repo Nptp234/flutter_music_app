@@ -1,12 +1,9 @@
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_music_app/data/model/user.dart';
 import 'package:flutter_music_app/model/const.dart';
 import 'package:flutter_music_app/model/list_menu_account.dart';
 import 'package:flutter_music_app/ui/user_page/user_center.dart';
-import 'package:quickalert/models/quickalert_type.dart';
-import 'package:quickalert/widgets/quickalert_dialog.dart';
 
 class AccountPage extends StatefulWidget {
   const AccountPage({super.key});

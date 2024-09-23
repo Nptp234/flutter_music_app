@@ -41,7 +41,7 @@ class ListUserModel{
     return _instance;
   }
 
-  List<User> _lst = [];
+  final List<User> _lst = [];
   UnmodifiableListView<User> get lstUser => UnmodifiableListView(_lst);
 
   bool add(User user){

@@ -69,7 +69,7 @@ Widget _customMusicTitle(BuildContext context, Music music){
             height: 50,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10),
-              child: Image.asset(music.imgUrl!, fit: BoxFit.cover,),
+              child: Image.network(music.imgUrl!, fit: BoxFit.cover,),
             ),
           ),
           const SizedBox(width: 20,),
@@ -77,8 +77,8 @@ Widget _customMusicTitle(BuildContext context, Music music){
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(music.name!, style: const TextStyle(color: Colors.white, fontSize: 17, fontWeight: FontWeight.bold),),
-              Text(music.uper!, style: const TextStyle(color: Colors.grey, fontSize: 15, fontWeight: FontWeight.bold),),
+              SizedBox( width: getMainWidth(context)-110, child: Flexible(child: Text(music.name!, style: const TextStyle(color: Colors.white, fontSize: 17, fontWeight: FontWeight.bold),overflow: TextOverflow.ellipsis, maxLines: 1,),),),
+              Text(music.uper!, style: const TextStyle(color: Colors.grey, fontSize: 15, fontWeight: FontWeight.bold),overflow: TextOverflow.ellipsis, maxLines: 1,),
             ],
           )
         ],

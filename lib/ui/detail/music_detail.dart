@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_music_app/data/api/music_api.dart';
 import 'package:flutter_music_app/data/model/music.dart';
 import 'package:flutter_music_app/model/const.dart';
 import 'package:flutter_music_app/model/duration_bar.dart';
@@ -17,6 +18,7 @@ class MusicDetail extends StatefulWidget{
 class _MusicDetail extends State<MusicDetail>{
 
   final AudioPlayer audioPlayer = AudioPlayer();
+  final MusicApi musicApi = MusicApi();
 
   Future<Duration?> _loadUrl() async{
     try {
@@ -29,7 +31,7 @@ class _MusicDetail extends State<MusicDetail>{
 
   @override
   void initState() {
-    widget.music.url = 'https://incompetech.com/music/royalty-free/mp3-royaltyfree/Bleeping%20Demo.mp3';
+    // widget.music.url = 'https://incompetech.com/music/royalty-free/mp3-royaltyfree/Bleeping%20Demo.mp3';
     super.initState();
   }
 
@@ -94,7 +96,7 @@ class _MusicDetail extends State<MusicDetail>{
             child: SizedBox(
               height: double.infinity,
               width: double.infinity,
-              child: Image.asset(widget.music.imgUrl!, fit: BoxFit.cover,),
+              child: Image.network(widget.music.imgUrl!, fit: BoxFit.cover,),
             ),
           ),
           Container(
@@ -149,8 +151,8 @@ class _MusicDetail extends State<MusicDetail>{
         children: [
           // name
           SizedBox(
-            width: getMainWidth(context)/2.5,
-            child: Text(widget.music.name!, style: const TextStyle(color: Colors.white, fontSize: 25, fontWeight: FontWeight.bold),),
+            width: getMainWidth(context)/1.5,
+            child: Text(musicApi.formatName(widget.music.name!), style: const TextStyle(color: Colors.white, fontSize: 25, fontWeight: FontWeight.bold), maxLines: 3, textAlign: TextAlign.left,),
           ),
           Row(
             children: [

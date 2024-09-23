@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_music_app/data/api/music_api.dart';
 import 'package:flutter_music_app/data/model/music.dart';
 import 'package:flutter_music_app/data/model/playlist.dart';
 import 'package:flutter_music_app/model/const.dart';
@@ -15,6 +16,18 @@ class HomePage extends StatefulWidget{
 }
 
 class _HomePage extends State<HomePage>{
+  MusicApi musicApi = MusicApi();
+
+  List<Music> _musics = [];
+  Future<List<Music>> getMusics() async{
+    try{
+      _musics = await musicApi.getList();
+      return _musics;
+    }
+    catch(e){
+      rethrow;
+    }
+  }
 
   final List<Playlist> _list = [
     Playlist(name: "Melodic rap", img: 'assets/logoIcon/arvarta.png'),
@@ -23,33 +36,6 @@ class _HomePage extends State<HomePage>{
     Playlist(name: "For you", img: 'assets/logoIcon/arvarta.png'),
     Playlist(name: "My playlist", img: 'assets/logoIcon/arvarta.png'),
     Playlist(name: "Melodic rap", img: 'assets/logoIcon/arvarta.png'),
-  ];
-
-  final List<Music> _musics = [
-    Music(name: 'Simple Love', uper: 'Obito', imgUrl: 'assets/logoIcon/arvarta.png'),
-    Music(name: 'Simple Love', uper: 'Obito', imgUrl: 'assets/logoIcon/arvarta.png'),
-    Music(name: 'Simple Love', uper: 'Obito', imgUrl: 'assets/logoIcon/arvarta.png'),
-    Music(name: 'Simple Love', uper: 'Obito', imgUrl: 'assets/logoIcon/arvarta.png'),
-    Music(name: 'Simple Love', uper: 'Obito', imgUrl: 'assets/logoIcon/arvarta.png'),
-  ];
-
-  final List<Music> _lst = [
-    Music(name: 'Simple Love', uper: 'Obito', imgUrl: 'assets/logoIcon/arvarta.png'),
-    Music(name: 'Simple Love', uper: 'Obito', imgUrl: 'assets/logoIcon/arvarta.png'),
-    Music(name: 'Simple Love', uper: 'Obito', imgUrl: 'assets/logoIcon/arvarta.png'),
-    Music(name: 'Simple Love', uper: 'Obito', imgUrl: 'assets/logoIcon/arvarta.png'),
-    Music(name: 'Simple Love', uper: 'Obito', imgUrl: 'assets/logoIcon/arvarta.png'),
-    Music(name: 'Simple Love', uper: 'Obito', imgUrl: 'assets/logoIcon/arvarta.png'),
-    Music(name: 'Simple Love', uper: 'Obito', imgUrl: 'assets/logoIcon/arvarta.png'),
-    Music(name: 'Simple Love', uper: 'Obito', imgUrl: 'assets/logoIcon/arvarta.png'),
-    Music(name: 'Simple Love', uper: 'Obito', imgUrl: 'assets/logoIcon/arvarta.png'),
-    Music(name: 'Simple Love', uper: 'Obito', imgUrl: 'assets/logoIcon/arvarta.png'),
-    Music(name: 'Simple Love', uper: 'Obito', imgUrl: 'assets/logoIcon/arvarta.png'),
-    Music(name: 'Simple Love', uper: 'Obito', imgUrl: 'assets/logoIcon/arvarta.png'),
-    Music(name: 'Simple Love', uper: 'Obito', imgUrl: 'assets/logoIcon/arvarta.png'),
-    Music(name: 'Simple Love', uper: 'Obito', imgUrl: 'assets/logoIcon/arvarta.png'),
-    Music(name: 'Simple Love', uper: 'Obito', imgUrl: 'assets/logoIcon/arvarta.png'),
-    Music(name: 'Simple Love', uper: 'Obito', imgUrl: 'assets/logoIcon/arvarta.png'),
   ];
 
   @override
@@ -68,7 +54,7 @@ class _HomePage extends State<HomePage>{
   Widget _body(BuildContext context){
     return Container(
       height: getMainHeight(context),
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.only(top: 10, left: 10, right: 10, bottom: 100),
       color: Colors.transparent,
 
       child: ListView(
@@ -79,16 +65,16 @@ class _HomePage extends State<HomePage>{
           const MySearchBar(),
 
           //flexible for not overflowed
-          ListView(
-            shrinkWrap: true,
-            physics: const ScrollPhysics(),
-            children: [
-              _lstPlaylist(context, 'For you', _list),
-              _lstPlaylist(context, 'Popular playlist', _list),
-              _lstPlaylist(context, 'Lofi', _list),
-              _lstPlaylist(context, 'Vietnamese beat', _list),
-            ],
-          ),
+          // ListView(
+          //   shrinkWrap: true,
+          //   physics: const ScrollPhysics(),
+          //   children: [
+          //     _lstPlaylist(context, 'For you', _list),
+          //     _lstPlaylist(context, 'Popular playlist', _list),
+          //     _lstPlaylist(context, 'Lofi', _list),
+          //     _lstPlaylist(context, 'Vietnamese beat', _list),
+          //   ],
+          // ),
 
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -96,7 +82,18 @@ class _HomePage extends State<HomePage>{
             children: [
               const Text('List music', style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),),
               const SizedBox(height: 20,),
-              MusicList(list: _lst)
+              FutureBuilder<List<Music>>(
+                future: getMusics(), 
+                builder: (context, snapshot){
+                  if(snapshot.connectionState==ConnectionState.waiting){
+                    return const Center(child: CircularProgressIndicator(color: Colors.white,),);
+                  }else if(!snapshot.hasData){
+                    return const Center(child: Text("Data is null or has error!"));
+                  }else{
+                    return MusicList(list: snapshot.data!);
+                  }
+                }
+              )
             ],
           )
         ],

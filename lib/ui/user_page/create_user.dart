@@ -1,9 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_music_app/data/model/user.dart';
 import 'package:flutter_music_app/model/bottom_menu.dart';
 import 'package:flutter_music_app/model/const.dart';
-import 'package:flutter_music_app/ui/pages/music.dart';
 
 class SignUp extends StatelessWidget{
 
