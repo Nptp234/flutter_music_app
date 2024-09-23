@@ -6,7 +6,7 @@ class Music {
     id = e["ID"];
     name = e["Name"];
     uper = e["Username"][0];
-    imgUrl = e["Image"][0]["url"];
     url = e["MusicFile"][0]["url"];
+    imgUrl = e["Image"][0]["url"];
   }
 }

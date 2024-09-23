@@ -39,7 +39,7 @@ class MusicItem extends StatelessWidget{
               crossAxisAlignment: CrossAxisAlignment.start,
 
               children: [
-                Text(musicApi.formatName(music.name!), style: const TextStyle(color: Colors.white, fontSize: 17, fontWeight: FontWeight.bold),),
+                Text(music.name!, style: const TextStyle(color: Colors.white, fontSize: 17, fontWeight: FontWeight.bold),),
                 const SizedBox(height: 7,),
                 Text(music.uper!, style: const TextStyle(color: Colors.grey, fontSize: 15, fontWeight: FontWeight.bold),)
               ],

@@ -8,17 +8,17 @@ class MusicApi{
   final String? key = dotenv.env['AIRTABLE_KEY'];
   final String baseUrl = 'https://api.airtable.com/v0/${dotenv.env['BASE_ID']}/${dotenv.env['MUSIC_ID']}';
 
-  String formatName(String name){
-    RegExp regExp = RegExp(r'(.+\.mp3)\s*\(');
-    RegExpMatch? match = regExp.firstMatch(name);
+  // String formatName(String name){
+  //   RegExp regExp = RegExp(r'(.+\.mp3)\s*\(');
+  //   RegExpMatch? match = regExp.firstMatch(name);
     
-    if (match != null) {
-      String name = match.group(1)!;
-      return name;
-    } else {
-      return "";
-    }
-  }
+  //   if (match != null) {
+  //     String name = match.group(1)!;
+  //     return name;
+  //   } else {
+  //     return "";
+  //   }
+  // }
 
   Future<Map<dynamic, dynamic>> _fetchAllData() async{
     try{

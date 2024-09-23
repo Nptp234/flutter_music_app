@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_music_app/data/api/music_api.dart';
@@ -6,6 +8,8 @@ import 'package:flutter_music_app/model/const.dart';
 import 'package:flutter_music_app/model/duration_bar.dart';
 import 'package:flutter_music_app/model/menu_bottom_sheet.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:quickalert/models/quickalert_type.dart';
+import 'package:quickalert/widgets/quickalert_dialog.dart';
 
 class MusicDetail extends StatefulWidget{
   MusicDetail({super.key, required this.music});
@@ -17,27 +21,60 @@ class MusicDetail extends StatefulWidget{
 
 class _MusicDetail extends State<MusicDetail>{
 
-  final AudioPlayer audioPlayer = AudioPlayer();
-  final MusicApi musicApi = MusicApi();
+  AudioPlayer audioPlayer = AudioPlayer();
+  MusicApi musicApi = MusicApi();
+  late final StreamSubscription<Duration> positionSubscription;
+  Duration? duration;
+  bool _alertShown = false;
 
   Future<Duration?> _loadUrl() async{
     try {
-      Duration? duration = await audioPlayer.setUrl(widget.music.url!);
+      duration = await audioPlayer.setUrl(widget.music.url!);
       return duration!;
     } catch (e) {
       return null;
     }
   }
 
+  Duration _currentDurration = Duration(seconds: 0);
+  Timer? _timer;
+
+  void _startTimer(){
+    _timer = Timer.periodic(const Duration(seconds: 1), (_){
+      _currentDurration = audioPlayer.position;
+    });
+  }
+  void _stopTimer(){_timer!.cancel();}
+
+  void _check(){
+    if(duration!.inSeconds>0 && !_alertShown){
+      double percentagePlayed = _currentDurration.inSeconds / duration!.inSeconds;
+
+      // Check if the percentage played is at least 50%
+      if (percentagePlayed >= 0.5) {
+        _alertShown=true;
+        QuickAlert.show(
+          context: context,
+          type: QuickAlertType.confirm,
+          text: "Player has played 50% or more of: ${widget.music.name}",
+        );
+      }
+    }
+  }
+
   @override
   void initState() {
     // widget.music.url = 'https://incompetech.com/music/royalty-free/mp3-royaltyfree/Bleeping%20Demo.mp3';
+    audioPlayer.positionStream.listen((position) {
+      _check();
+    });
     super.initState();
   }
 
   @override
   void dispose() {
     audioPlayer.dispose();
+    _stopTimer();
     super.dispose();
   }
 
@@ -151,8 +188,8 @@ class _MusicDetail extends State<MusicDetail>{
         children: [
           // name
           SizedBox(
-            width: getMainWidth(context)/1.5,
-            child: Text(musicApi.formatName(widget.music.name!), style: const TextStyle(color: Colors.white, fontSize: 25, fontWeight: FontWeight.bold), maxLines: 3, textAlign: TextAlign.left,),
+            width: getMainWidth(context)/1.75,
+            child: Text(widget.music.name!, style: const TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold), maxLines: 3, textAlign: TextAlign.left,),
           ),
           Row(
             children: [
@@ -184,6 +221,7 @@ class _MusicDetail extends State<MusicDetail>{
         }
         else{
           audioPlayer.play();
+          _startTimer();
           return DurationBar(audioPlayer: audioPlayer, duration: snapshot.data!);
         }
       }
@@ -191,6 +229,7 @@ class _MusicDetail extends State<MusicDetail>{
   }
 
   bool isPause = false;
+  IconData icon = CupertinoIcons.pause_circle;
 
   Widget _playSkip(BuildContext context){
     return Container(
@@ -209,15 +248,7 @@ class _MusicDetail extends State<MusicDetail>{
           ),
 
           //pause
-          IconButton(
-            onPressed: (){
-              if(isPause){
-                audioPlayer.play();
-              }else {audioPlayer.pause();}
-              isPause = !isPause;
-            }, 
-            icon: const Icon(CupertinoIcons.pause_circle, color: Colors.white, size: 60,)
-          ),
+          Center(child: Pause(isPause: isPause, audioPlayer: audioPlayer),),
 
           //next
           IconButton(
@@ -226,6 +257,38 @@ class _MusicDetail extends State<MusicDetail>{
           ),
         ],
       ),
+    );
+  }
+
+}
+
+class Pause extends StatefulWidget{
+  
+  bool isPause;
+  AudioPlayer audioPlayer;
+  Pause({super.key, required this.isPause, required this.audioPlayer});
+
+  @override
+  State<Pause> createState() => _Pause();
+}
+class _Pause extends State<Pause>{
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: IconButton(
+            onPressed: (){
+              if(widget.isPause){
+                widget.audioPlayer.play();
+              }else {
+                widget.audioPlayer.pause();
+              }
+              setState(() {
+                widget.isPause = !widget.isPause;
+              });
+            }, 
+            icon: !widget.isPause?const Icon(CupertinoIcons.pause_circle, color: Colors.white, size: 60,):const Icon(CupertinoIcons.play_circle, color: Colors.white, size: 60,)
+          ),
     );
   }
 
